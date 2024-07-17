@@ -1,9 +1,13 @@
 <section class="content">
 
-    <div class="card card-default">
 
+        <div style="text-align: right">
 
-    </div>
+            <div id="calendar" style="width: 60%; ">
+
+            </div>
+        </div>
+
 </section>
 
 

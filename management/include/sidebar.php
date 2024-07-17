@@ -5,6 +5,13 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column">
                 <?php
+
+                menuTreeSubTitle("Tatil Günleri",
+                    "far fas fa-bed nav-icon",
+                    "src/holidays",
+                    "", "");
+
+
                 menuLabel("Site Bilgileri", "green");
 
                 menuTitleWithDot("Siteye Giriş", "primary", baseUrlFront(), "_blank");

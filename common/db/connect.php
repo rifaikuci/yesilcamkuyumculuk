@@ -1,9 +1,9 @@
 <?php
 
 try {
-    $db =
-        mysqli_connect("localhost", "root", "", "yesilcam_kuyumculuk");
-    $db->set_charset("utf8");
+    $db = new PDO('mysql:host=localhost;dbname=yesilcam_kuyumculuk', 'root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 } catch (ErrorException  $exception) {
     echo $exception;

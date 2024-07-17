@@ -45,7 +45,7 @@ function buildTableHtml($params)
 function buildTableHeader($params)
 {
     $columns = implode('', array_map(fn($name) => '<th>' . htmlspecialchars($name) . '</th>', $params['columnName']));
-    if ($params['isView'] || $params['isDelete'] || $params['isUpdate']) {
+    if ($params['isView'] || $params['isDelete'] || $params['isUpdate'] || $params['isMultipleImage']) {
         $columns .= '<th style="text-align: center">İşlem</th>';
     }
     return '<tr class="' . htmlspecialchars($params['tableHeaderText']) . ' ' . htmlspecialchars($params['tableHeaderBackground']) . '">' . $columns . '</tr>';
@@ -65,7 +65,11 @@ function buildTableRow($row, $params)
     $cells = implode('', array_map(fn($column) => '<td>' . htmlspecialchars(wordSplice($row[$column], 10)) . '</td>', $params['isVisibleColumn']));
     $actions = buildActionButtons($row['id'], $params);
 
-    return $cells . '<td style="text-align: center">' . $actions . '</td>';
+    if ($params['isView'] || $params['isDelete'] || $params['isUpdate'] || $params['isMultipleImage']) {
+        $cells .= '<td style="text-align: center">' . $actions . '</td>';
+    }
+
+    return $cells;
 }
 
 function buildActionButtons($id, $params)
@@ -107,4 +111,5 @@ function buildInsertButton()
                 <a href="insert/" class="btn btn-primary"><i class="fa fa-plus"></i> Ekle</a>
             </div>';
 }
+
 ?>

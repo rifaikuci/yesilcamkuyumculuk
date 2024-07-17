@@ -1,95 +1,89 @@
 <?php
-
-function insert($data, $table)
+function insert($data, $table, $db)
 {
-    $sql = "INSERT INTO " . $table . "(";
-    $keys = "";
-    $values = "";
+    $keys = implode(", ", array_keys($data));
+    $placeholders = implode(", ", array_fill(0, count($data), '?'));
 
+    $sql = "INSERT INTO $table ($keys) VALUES ($placeholders)";
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute(array_values($data));
+
+    return $db->lastInsertId();
+}
+
+function update($data, $table, $id, $db)
+{
+    $set = [];
     foreach ($data as $key => $value) {
-            $keys = $keys . $key . ", ";
-            if($value != '') {
-                $value = str_replace("'","`",$value);
-                $values = $values . "'$value'" . ", ";
-            }else {
-                $values = $values . 'NULL' . ", ";
-            }
+        $set[] = "$key = ?";
     }
-    $keys = rtrim($keys, " ,");
-    $values = rtrim($values, " ,");
 
-    $sql = $sql . $keys . ') VALUES (' . $values . ')';
-    return $sql;
+    $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
+    $stmt = $db->prepare($sql);
 
+// Değerleri bağla
+    $data[] = $id; // ID'yi son olarak ekle
+    $stmt->execute(array_values($data));
+
+    return $stmt->rowCount(); // Güncellenen satır sayısını döndür
 }
 
-function update($data, $table, $id) {
+function delete($id, $table, $db)
+{
+    $sql = "DELETE FROM $table WHERE id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$id]);
 
-    $sql  =  "UPDATE $table set ";
-    $sira = 0;
-    foreach ($data as $key => $value) {
-
-            $sira++;
-            $value = str_replace("'","`",$value);
-            $sql = $sql. "$key = '$value',"  ;
-    }
-    $sql = rtrim($sql,",");
-    $sql = $sql . " WHERE id = ". $id;
-
-    // yapılmasının değeri eğer set 'ten sonra tamam boş geliniyorsa engellemek yoksa sql çalıştırılmaz.
-    if ($sira > 0) {
-        return  $sql;
-    }  else {
-        return "no_update";
-    }
+    return $stmt->rowCount(); // Silinen satır sayısını döndür
 }
 
-function delete($id, $table) {
-    return "DELETE FROM $table where id = '$id'";
+function getDataRow($id, $table, $db)
+{
+    $sql = "SELECT * FROM $table WHERE id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$id]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function getDataRow ($id, $table, $db) {
-    $sql = "SELECT * FROM $table where id = '$id'";
-    return mysqli_query($db, $sql)->fetch_assoc();
-
-
-}
 function getTableColumns($table, $db)
 {
     $sql = "SHOW COLUMNS FROM $table";
-    $getColumns = mysqli_query($db, $sql);
+    $getColumns = $db->query($sql);
 
-    $columns = array();
-    while ($row = mysqli_fetch_array($getColumns)) {
-        array_push($columns, $row['Field']);
-    }
-    return $columns;
+    return $getColumns->fetchAll(PDO::FETCH_COLUMN);
 }
 
 function getAllData($table, $limit, $db)
 {
     $columns = getTableColumns($table, $db);
+    $sql = "SELECT * FROM $table ORDER BY id";
 
-
-    if($limit) {
-        $sql = "SELECT * FROM $table order by id LIMIT $limit ";
-
-    } else {
-        $sql = "SELECT * FROM $table order by id ";
-
+    if ($limit) {
+        $sql .= " LIMIT ?";
     }
 
-    $result = $db->query($sql);
-    $data = array();
+    $stmt = $db->prepare($sql);
+
+// Limiti bağla (varsa)
+    if ($limit) {
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+
+    $data = [];
     $counter = 0;
-    while ($row = $result->fetch_array()) {
-        $counter ++;
-        $item = null;
-        for ($i = 0; $i < count($columns); $i++) {
-            $item[$columns[$i]] = $row[$columns[$i]];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $counter++;
+        $item = [];
+        foreach ($columns as $column) {
+            $item[$column] = $row[$column];
         }
-        $item['counter'] = "#".$counter;
-        array_push($data,$item);
+        $item['counter'] = "#" . $counter;
+        $data[] = $item;
     }
 
     return $data;
@@ -98,36 +92,44 @@ function getAllData($table, $limit, $db)
 function getAllDataWithSort($table, $limit, $db, $sort)
 {
     $columns = getTableColumns($table, $db);
-    $sort = $sort ? $sort : "asc";
+    $sort = $sort ? $sort : "ASC";
 
+    $sql = "SELECT * FROM $table ORDER BY id $sort";
 
-    if($limit) {
-        $sql = "SELECT * FROM $table order by id $sort LIMIT $limit  ";
-
-    } else {
-        $sql = "SELECT * FROM $table order by id $sort ";
-
+    if ($limit) {
+        $sql .= " LIMIT ?";
     }
 
-    $result = $db->query($sql);
-    $data = array();
+    $stmt = $db->prepare($sql);
+
+// Limiti bağla (varsa)
+    if ($limit) {
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+
+    $data = [];
     $counter = 0;
-    while ($row = $result->fetch_array()) {
-        $counter ++;
-        $item = null;
-        for ($i = 0; $i < count($columns); $i++) {
-            $item[$columns[$i]] = $row[$columns[$i]];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $counter++;
+        $item = [];
+        foreach ($columns as $column) {
+            $item[$column] = $row[$column];
         }
-        $item['counter'] = "#".$counter;
-        array_push($data,$item);
+        $item['counter'] = "#" . $counter;
+        $data[] = $item;
     }
 
     return $data;
 }
 
-function getDataRowByColumn ($id, $table, $db, $columnName = 'id') {
-    $sql = "SELECT * FROM $table where ". $columnName ." = '$id'";
+function getDataRowByColumn($id, $table, $db, $columnName = 'id')
+{
+    $sql = "SELECT * FROM $table WHERE $columnName = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$id]);
 
-    return mysqli_query($db, $sql)->fetch_assoc();
-
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }

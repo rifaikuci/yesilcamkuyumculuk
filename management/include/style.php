@@ -21,5 +21,6 @@ if (!isset($_SESSION['management'])) {
 <link rel="stylesheet" href="<?php echo baseUrlBack() . "style/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" ?>">
 <link rel="stylesheet" href="<?php echo baseUrlBack() . "style/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" ?>">
 <link rel="stylesheet" href="<?php echo baseUrlBack() . "style/plugins/dropzone/min/dropzone.min.css" ?>">
+<link rel="stylesheet" href="<?php echo baseUrlBack() . "style/plugins/fullcalendar/main.css" ?>">
 <link rel="stylesheet" href="<?php echo baseUrlBack() . "style/dist/css/adminlte.min.css?v=3.2.0" ?>">
 
