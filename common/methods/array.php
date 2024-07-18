@@ -2,15 +2,13 @@
 
 function getDataForm($arrayKey)
 {
-    $arrayKeyValue = array();
-    for ($i = 0; $i < count($arrayKey); $i++) {
-        $temp = $arrayKey[$i];
-        $value = isset($_POST[$temp]) ? $_POST[$temp] : '';
-        array_push($arrayKeyValue, $value);
+    $arrayKeyValue = [];
+    foreach ($arrayKey as $key) {
+        $arrayKeyValue[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
     }
-
-    return array_combine($arrayKey, $arrayKeyValue);
+    return $arrayKeyValue;
 }
+
 
 function getDataFilter($array, $objectName, $searchValue)
 {

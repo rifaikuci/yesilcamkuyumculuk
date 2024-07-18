@@ -8,7 +8,7 @@
              class="img-circle elevation-2" alt="Gold Image">
     </div>
     <div class="info">
-        <a href="#" class="d-block"><?php echo "Yeşilçam Kuyumculuk" ?></a>
+        <a href="<?php echo  baseUrlBack();?>" class="d-block"><?php echo "Yeşilçam Kuyumculuk" ?></a>
     </div>
 </div>
 

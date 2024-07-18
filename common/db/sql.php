@@ -1,41 +1,53 @@
 <?php
 function insert($data, $table, $db)
 {
-    $keys = implode(", ", array_keys($data));
-    $placeholders = implode(", ", array_fill(0, count($data), '?'));
+    try {
+        $keys = implode(", ", array_keys($data));
+        $placeholders = implode(", ", array_fill(0, count($data), '?'));
+        $sql = "INSERT INTO $table ($keys) VALUES ($placeholders)";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array_values($data));
+        return $db->lastInsertId();
+    } catch (PDOException $e) {
+        return false;
+    }
 
-    $sql = "INSERT INTO $table ($keys) VALUES ($placeholders)";
-    $stmt = $db->prepare($sql);
-
-    $stmt->execute(array_values($data));
-
-    return $db->lastInsertId();
 }
 
 function update($data, $table, $id, $db)
 {
-    $set = [];
-    foreach ($data as $key => $value) {
-        $set[] = "$key = ?";
+    try {
+        $set = [];
+        foreach ($data as $key => $value) {
+            $set[] = "$key = ?";
+        }
+
+        $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
+        $stmt = $db->prepare($sql);
+
+
+        $data[] = $id; // ID'yi son olarak ekle
+        $stmt->execute(array_values($data));
+
+        return $stmt->rowCount(); // Güncellenen satır sayısını döndür
+    } catch (PDOException $e) {
+        return false;
     }
 
-    $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
-    $stmt = $db->prepare($sql);
-
-// Değerleri bağla
-    $data[] = $id; // ID'yi son olarak ekle
-    $stmt->execute(array_values($data));
-
-    return $stmt->rowCount(); // Güncellenen satır sayısını döndür
 }
 
 function delete($id, $table, $db)
 {
-    $sql = "DELETE FROM $table WHERE id = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$id]);
+    try {
+        $sql = "DELETE FROM $table WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
 
-    return $stmt->rowCount(); // Silinen satır sayısını döndür
+        return $stmt->rowCount();
+    } catch (PDOException $e) {
+        return  false;
+    }
+
 }
 
 function getDataRow($id, $table, $db)

@@ -19,7 +19,7 @@ function getTextInput($params)
     echo '<div class="col-sm-' . $size . '">
             <div class="form-group">
                 <label>' . htmlspecialchars($label) . '</label>
-                <input type="text" class="form-control form-control-md"
+                <input type="text" class="form-control form-control-lg"
                        name="' . htmlspecialchars($name) . '"
                        value="' . htmlspecialchars($value) . '"
                        placeholder="' . htmlspecialchars($placeholder) . '"' .
