@@ -10,6 +10,7 @@ if (file_exists("utils/index.php")) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -19,8 +20,8 @@ if (file_exists("utils/index.php")) {
     <meta name="description" content="">
     <link rel="shortcut icon" type="image/png" href="<?php echo baseUrlBack() . "style/dist/img/favIcon/icon.png"; ?>">
 
-    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Tatil Ekle</title>
-   <?php
+    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Api Key Ekle</title>
+    <?php
     if (file_exists("include/style.php")) {
         require_once "include/style.php";
     } elseif (file_exists("../include/style.php")) {
@@ -31,13 +32,14 @@ if (file_exists("utils/index.php")) {
         require_once "../../../include/style.php";
     }
     ?>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
 
 <div class="wrapper">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <?php
+        <?php
         if (file_exists("include/sidebar-menu-icon.php")) {
             require_once "include/sidebar-menu-icon.php";
             require_once "include/top-bar-notification.php";
@@ -54,7 +56,7 @@ if (file_exists("utils/index.php")) {
 
     </nav>
 
-   <?php
+    <?php
     if (file_exists("include/sidebar.php")) {
         require_once "include/sidebar.php";
     } elseif (file_exists("../include/sidebar.php")) {
@@ -66,12 +68,12 @@ if (file_exists("utils/index.php")) {
     }
     ?>
 
+
     <div class="content-wrapper">
-        <?php getBreadcrumb("Tatiller Listesi", 'Ekle '); ?>
+        <?php getBreadcrumb("Api Key Listesi", 'Ekle '); ?>
         <?php require_once "main.php" ?>
     </div>
-
-     <?php
+    <?php
     if (file_exists("include/footer.php")) {
         require_once "include/footer.php";
     } elseif (file_exists("../include/footer.php")) {
@@ -82,6 +84,7 @@ if (file_exists("utils/index.php")) {
         require_once "../../../include/footer.php";
     }
     ?>
+
 
 </div>
 
@@ -96,5 +99,6 @@ if (file_exists("include/script.php")) {
     require_once "../../../include/script.php";
 }
 ?>
+
 </body>
 </html>

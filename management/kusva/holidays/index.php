@@ -1,6 +1,8 @@
 <?php
 
 $holidaysTable = "holidays";
+$dirName = basename(__DIR__);
+$fileName = basename(__FILE__, ".php");
 
 if (isset($_GET['getHolidays'])) {
     $data = getAllData($holidaysTable, "", $db);
@@ -18,25 +20,12 @@ if (isset($_GET['getHolidays'])) {
     exit();
 }
 
-function redirectToPath($path, $status) {
-    header("Location: $path/?$status");
-    exit();
-}
-
-function getPath() {
-    $dirName = basename(__DIR__);
-    $fileName = basename(__FILE__, ".php");
-    $path = baseUrlBack() . "src/" . $dirName;
-    if ($fileName != "index") {
-        $path .= "/" . $fileName;
-    }
-    return $path;
-}
 
 if (isset($_POST['holidaysInsert'])) {
+
     $data = getDataForm(["date", "name"]);
     $lastId = insert($data, $holidaysTable, $db);
-    $path = getPath();
+    $path = getPath($dirName, $fileName);
     redirectToPath($path, 'insert=' . ($lastId ? "ok" : "no"));
 }
 
@@ -45,13 +34,13 @@ if (isset($_POST['holidaysUpdate'])) {
     $data = getDataForm(["date", "name"]);
 
     $isUpdate = update($data, $holidaysTable, $id, $db);
-    $path = getPath();
+    $path = getPath($dirName, $fileName);
     redirectToPath($path, 'update=' . ($isUpdate ? "ok" : "no"));
 }
 
 if (isset($_GET['holidaysDelete'])) {
     $id = $_GET['holidaysDelete'];
     $isSuccess = delete($id, $holidaysTable, $db);
-    $path = getPath();
+    $path = getPath($dirName, $fileName);
     redirectToPath($path, 'delete=' . ($isSuccess ? "ok" : "no"));
 }

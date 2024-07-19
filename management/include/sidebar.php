@@ -11,6 +11,11 @@
                     "src/holidays",
                     "", "");
 
+                menuTreeSubTitle("Api Key",
+                    "far fas fa-key nav-icon",
+                    "src/collectionApi",
+                    "", "");
+
 
                 menuLabel("Site Bilgileri", "green");
 
