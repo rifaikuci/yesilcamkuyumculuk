@@ -1,20 +1,16 @@
-<?php
-// Include utils if it exists
-$utilsPaths = [
-    "utils/index.php",
-    "../utils/index.php",
-    "../../utils/index.php",
-    "../../../utils/index.php",
-];
 
-foreach ($utilsPaths as $path) {
-    if (file_exists($path)) {
-        require_once $path;
-        break; // Exit the loop once the file is found
-    }
+<?php
+if (file_exists("utils/index.php")) {
+    require_once "utils/index.php";
+} elseif (file_exists("../utils/index.php")) {
+    require_once "../utils/index.php";
+} elseif (file_exists("../../utils/index.php")) {
+    require_once "../../utils/index.php";
+} elseif (file_exists("../../../utils/index.php")) {
+    require_once "../../../utils/index.php";
 }
-$loginString = "Giriş"
 ?>
+
 
 <!doctype html>
 <html lang="<?php echo htmlspecialchars($lang); ?>">
