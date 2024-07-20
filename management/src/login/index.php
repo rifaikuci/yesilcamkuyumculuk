@@ -39,7 +39,7 @@ if (file_exists("utils/index.php")) {
                     </div>
                     <h3 class="text-center mb-4"><?php echo getLabel($loginString, "Login", $lang); ?></h3>
                     <form method="post" action="<?php echo baseUrlBack() . 'kusva/index.php'; ?>" class="login-form">
-                        <?php getTextHidden("loginControl", "loginControl"); ?>
+                        <?php getTextHidden(['name'=>'loginControl', 'value'=> 'loginControl']); ?>
                         <div class="form-group">
                             <input name="name" type="text" class="form-control rounded-left"
                                    oninput="this.value = this.value.replace(/[^0-9a-zA-Z@.?!+^()/=%&]/g, '').replace(/(\..*)\./g, '$1');"

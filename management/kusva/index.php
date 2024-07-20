@@ -37,6 +37,7 @@ $modules = [
     "common/index.php",
     "holidays/index.php",
     "collectionApi/index.php",
+    "currency/index.php",
 ];
 
 // Include all module files

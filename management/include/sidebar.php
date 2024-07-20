@@ -16,6 +16,11 @@
                     "src/collectionApi",
                     "", "");
 
+                menuTreeSubTitle("Döviz Listesi",
+                    "far fas fa-dollar-sign nav-icon",
+                    "src/currency",
+                    "", "");
+
 
                 menuLabel("Site Bilgileri", "green");
 
