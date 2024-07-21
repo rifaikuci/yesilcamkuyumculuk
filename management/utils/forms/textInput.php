@@ -9,14 +9,14 @@ function createAttributes($params) {
 
 function getTextInput($params)
 {
-    $size = $params['size'] ?? 12;
+    $size = $params['size'] ?? 6;
     $label = $params['label'] ?? "label";
     $placeholder = $params['placeholder'] ?? $label;
     $name = $params['name'] ?? "name";
     $value = $params['value'] ?? "";
     $attributes = createAttributes($params);
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <div class="form-group">
                 <label>' . htmlspecialchars($label) . '</label>
                 <input type="text" class="form-control form-control-lg"
@@ -30,7 +30,7 @@ function getTextInput($params)
 
 function getNumberInput($params)
 {
-    $size = $params['size'] ?? 4;
+    $size = $params['size'] ?? 6;
     $label = $params['label'] ?? "label";
     $placeholder = $params['placeholder'] ?? "0";
     $name = $params['name'] ?? $label;
@@ -40,10 +40,10 @@ function getNumberInput($params)
     $value = $params['value'] ?? "";
     $attributes = createAttributes($params);
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <div class="form-group">
                 <label>' . htmlspecialchars($label) . '</label>
-                <input type="number" class="form-control form-control-md"
+                <input type="number" class="form-control form-control-lg"
                        name="' . htmlspecialchars($name) . '"
                        value="' . htmlspecialchars($value) . '"
                        step="' . htmlspecialchars($step) . '"
@@ -64,15 +64,15 @@ function getTextHidden($params)
 
 function getInputFile($params)
 {
-    $size = $params['size'] ?? 4;
+    $size = $params['size'] ?? 6;
     $label = $params['label'] ?? "label";
     $name = $params['name'] ?? $label;
     $isLabelAlso = $params['isLabelAlso'] ?? false;
     $attributes = createAttributes($params);
 
-    $labelText = $isLabelAlso ? '<label style="color: #0c84ff; font-weight: 500">Resmi güncellemek için Resim seçiniz</label><br>' : '';
+    $labelText = $isLabelAlso ? '<label style="color: #0c84ff; font-weight: 500">Relgi güncellemek için Resim seçiniz</label><br>' : '';
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <div class="form-group">
                 ' . $labelText . '
                 <label>' . htmlspecialchars($label) . '</label>
@@ -84,11 +84,11 @@ function getInputFile($params)
 
 function getViewFile($params)
 {
-    $size = $params['size'] ?? 3;
+    $size = $params['size'] ?? 6;
     $label = $params['label'] ?? "";
     $path = $params['path'] ? baseUrlBack() . $params['path'] : "#";
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <a href="' . htmlspecialchars($path) . '" data-toggle="lightbox" data-title="' . htmlspecialchars($label) . '" data-gallery="gallery">
                 <img src="' . htmlspecialchars($path) . '" class="img-fluid mb-' . $size . '" alt="' . htmlspecialchars($label) . '"/>
             </a>
@@ -110,7 +110,7 @@ function getTextArea($params)
     $name = $params['name'] ?? "";
     $attributes = createAttributes($params);
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <div>
                 <label>' . htmlspecialchars($label) . '</label>
                 <textarea name="' . htmlspecialchars($name) . '" class="form-control"
@@ -130,7 +130,7 @@ function getCKEditor($params)
     $name = $params['name'] ?? "";
     $attributes = createAttributes($params);
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <div>
                 <label>' . htmlspecialchars($label) . '</label>
                 <textarea class="editorler" id="' . uniqid() . '"' .
@@ -150,7 +150,7 @@ function getLinkView($params)
     $fileArray = explode("/", $link);
     $name = end($fileArray);
 
-    echo '<div class="col-sm-' . $size . '">
+    echo '<div class="col-lg-' . $size . '">
             <label>' . htmlspecialchars($label) . '</label>
             <br>
             <a target="_blank" href="' . baseUrlBack() . htmlspecialchars($link) . '">' . htmlspecialchars($name) . '</a>

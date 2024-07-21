@@ -21,6 +21,16 @@
                     "src/currency",
                     "", "");
 
+                menuTreeSubTitle("Personeller",
+                    "far fas fa-user-secret nav-icon",
+                    "src/personel",
+                    "", "");
+
+                menuTreeSubTitle("Müşteriler",
+                    "far fas fa-users nav-icon",
+                    "src/customer",
+                    "", "");
+
 
                 menuLabel("Site Bilgileri", "green");
 

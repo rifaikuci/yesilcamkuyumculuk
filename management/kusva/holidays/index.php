@@ -1,5 +1,7 @@
 <?php
 
+global $db;
+
 $holidaysTable = "holidays";
 $dirName = basename(__DIR__);
 $fileName = basename(__FILE__, ".php");

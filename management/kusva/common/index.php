@@ -1,4 +1,5 @@
 <?php
+global $db;
 
 if ( !empty($_FILES) && isset($_POST['multipleImageInsert'])) {
 

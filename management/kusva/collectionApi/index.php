@@ -1,5 +1,7 @@
 <?php
 
+global $db;
+
 $collectionApiTable = "collectionApi";
 $dirName = basename(__DIR__);
 $fileName = basename(__FILE__, ".php");

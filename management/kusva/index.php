@@ -31,13 +31,14 @@ function getPath( $dirName, $fileName) {
 
 require_once "login/index.php";
 
-// Check if the session is set
 
 $modules = [
     "common/index.php",
     "holidays/index.php",
     "collectionApi/index.php",
     "currency/index.php",
+    "personel/index.php",
+    "customer/index.php",
 ];
 
 // Include all module files

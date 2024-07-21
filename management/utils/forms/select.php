@@ -4,7 +4,7 @@ function getSelect($options = [])
 {
     // Set default values using array_merge for flexibility
     $defaults = [
-        'size' => 4,
+        'size' => 6,
         'data' => ['' => "Seçiniz"],
         'label' => "Label",
         'name' => "",
@@ -34,7 +34,7 @@ function getSelect($options = [])
 
     // Generate options
     foreach ($config['data'] as $key => $value) {
-        $selectedAttr = ($key == $config['selected']) ? ' selected' : '';
+        $selectedAttr = ($key == $config['value']) ? ' selected' : '';
         $html .= '<option value="' . htmlspecialchars($key) . '"' . $selectedAttr . '>' . htmlspecialchars($value) . '</option>';
     }
 
