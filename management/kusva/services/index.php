@@ -7,7 +7,11 @@ $fileName = basename(__FILE__, ".php");
 
 if (isset($_POST['servicesInsert'])) {
 
-    $data = getDataForm(["title", "titleE", "description", "descriptionE", "metaKeywords", "metaKeywordsE", "metaKeywordsE", "metaDescription", "metaDescriptionE", "className"]);
+    $data = getDataForm([
+        "title", "titleE",
+        "description", "descriptionE",
+        "metaKeywordsE", "metaKeywordsE",
+        "metaDescription", "metaDescriptionE", "className"]);
 
     $data['seoTitle'] = seo($data['title']);
     $data['seoTitleE'] = seo($data['titleE']);
@@ -35,7 +39,12 @@ if (isset($_POST['servicesInsert'])) {
 
 if (isset($_POST['servicesUpdate'])) {
     $id = $_POST['servicesUpdate'];
-    $data = getDataForm(["title", "titleE", "description", "descriptionE", "metaKeywords", "metaKeywordsE", "metaKeywordsE", "metaDescription", "metaDescriptionE", "className"]);
+    $data = getDataForm([
+        "title", "titleE",
+        "description", "descriptionE",
+        "metaKeywordsE", "metaKeywordsE",
+        "metaDescription", "metaDescriptionE", "className"]);
+
 
     $oldData = getDataRow($id, $servicesTable, $db);
     $path = getPath($dirName, $fileName);
@@ -58,12 +67,10 @@ if (isset($_POST['servicesUpdate'])) {
             if (isset($_FILES['image']) && $_FILES['image']['name']) {
                 $data['image'] = $file;
             }
-            $isUpdate = update($data, $servicesTable, $id, $db);
-
         }
-    } else  {
-        $isUpdate = update($data, $servicesTable, $id, $db);
     }
+
+    $isUpdate = update($data, $servicesTable, $id, $db);
 
 
     redirectToPath($path, 'update=' . ($isUpdate ? "ok" : "no"));
