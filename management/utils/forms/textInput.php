@@ -65,12 +65,12 @@ function getTextHidden($params)
 function getInputFile($params)
 {
     $size = $params['size'] ?? 6;
-    $label = $params['label'] ?? "label";
-    $name = $params['name'] ?? $label;
+    $label = $params['label'] ?? "Resim Seçiniz";
+    $name = $params['name'] ?? 'image';
     $isLabelAlso = $params['isLabelAlso'] ?? false;
     $attributes = createAttributes($params);
 
-    $labelText = $isLabelAlso ? '<label style="color: #0c84ff; font-weight: 500">Relgi güncellemek için Resim seçiniz</label><br>' : '';
+    $labelText = $isLabelAlso ? '<label style="color: #0c84ff; font-weight: 500">Resmi güncellemek için Resim seçiniz</label><br>' : '';
 
     echo '<div class="col-lg-' . $size . '">
             <div class="form-group">
@@ -87,12 +87,32 @@ function getViewFile($params)
     $size = $params['size'] ?? 6;
     $label = $params['label'] ?? "";
     $path = $params['path'] ? baseUrlBack() . $params['path'] : "#";
+    $id  = $params['id'] ?? "";
 
-    echo '<div class="col-lg-' . $size . '">
+    $cur_dir = getcwd();
+    $cur_dir = explode("/", $cur_dir);
+    $tempKeyword = $cur_dir[count($cur_dir) - 2] . "ImageDelete";
+    $pathDelete = '';
+    if (file_exists("../../kusva")) {
+        $pathDelete = "../../kusva/?";
+    } elseif (file_exists("../../../kusva")) {
+        $pathDelete = "../../../kusva/?";
+    }
+
+    echo '<div><div class="col-lg-' . $size . '">
             <a href="' . htmlspecialchars($path) . '" data-toggle="lightbox" data-title="' . htmlspecialchars($label) . '" data-gallery="gallery">
                 <img src="' . htmlspecialchars($path) . '" class="img-fluid mb-' . $size . '" alt="' . htmlspecialchars($label) . '"/>
             </a>
-          </div>';
+          </div>
+          <div class="col-lg-12" style="margin-top: 20px">
+         <a href="'. $pathDelete.$tempKeyword.'='.$id.'" style="color: red; margin-left: 50px;" ">
+          Resmi Sil
+</a>
+          
+</div>
+ 
+          </div>
+          ';
 }
 
 function getPdfLink($params)

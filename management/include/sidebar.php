@@ -31,6 +31,11 @@
                     "src/customer",
                     "", "");
 
+                menuTreeSubTitle("Hizmetler",
+                    "far fas fa-list nav-icon",
+                    "src/services",
+                    "", "");
+
 
                 menuLabel("Site Bilgileri", "green");
 

@@ -63,7 +63,7 @@ function buildTableBody($params)
 function buildTableRow($row, $params)
 {
     $cells = implode('', array_map(fn($column) => '<td>' . htmlspecialchars(wordSplice($row[$column], 10)) . '</td>', $params['isVisibleColumn']));
-    $actions = buildActionButtons($row['id'], $params);
+    $actions = buildActionButtons(isset($row['mId']) && $row['mId'] ? $row['mId'] : $row['id'], $params);
 
     if ($params['isView'] || $params['isDelete'] || $params['isUpdate'] || $params['isMultipleImage']) {
         $cells .= '<td style="text-align: center">' . $actions . '</td>';

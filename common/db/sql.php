@@ -22,39 +22,64 @@ function update($data, $table, $id, $db)
             $set[] = "$key = ?";
         }
 
-        $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
-        $stmt = $db->prepare($sql);
+        try {
+            $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE mId = ?";
+            $stmt = $db->prepare($sql);
+            $data[] = $id;
+            $stmt->execute(array_values($data));
+
+        } catch (Exception $e) {
+            $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
+            $stmt = $db->prepare($sql);
+            $data[] = $id;
+            $stmt->execute(array_values($data));
+        }
 
 
-        $data[] = $id; // ID'yi son olarak ekle
-        $stmt->execute(array_values($data));
-
-        return $stmt->rowCount(); // Güncellenen satır sayısını döndür
+        return $stmt->rowCount();
     } catch (PDOException $e) {
         return false;
     }
-
 }
 
 function delete($id, $table, $db)
 {
+
+    $row = getDataRow($id, $table, $db);
+
+
     try {
-        $sql = "DELETE FROM $table WHERE id = ?";
+        $sql = "DELETE FROM $table WHERE mId = ?";
         $stmt = $db->prepare($sql);
         $stmt->execute([$id]);
 
-        return $stmt->rowCount();
     } catch (PDOException $e) {
-        return  false;
+        $sql = "DELETE FROM $table WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
     }
 
+    if(isset($row['image']) && $row['image']) {
+        if (file_exists("../" . $row['image'])) {
+            unlink("../" . $row['image']);
+        }
+    }
+
+    return $stmt->rowCount();
 }
 
 function getDataRow($id, $table, $db)
 {
-    $sql = "SELECT * FROM $table WHERE id = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$id]);
+    try {
+        $sql = "SELECT * FROM $table WHERE mId = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+
+    } catch (Exception $e) {
+        $sql = "SELECT * FROM $table WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+    }
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -78,7 +103,6 @@ function getAllData($table, $limit, $db)
 
     $stmt = $db->prepare($sql);
 
-// Limiti bağla (varsa)
     if ($limit) {
         $stmt->bindParam(1, $limit, PDO::PARAM_INT);
     }
@@ -114,7 +138,6 @@ function getAllDataWithSort($table, $limit, $db, $sort)
 
     $stmt = $db->prepare($sql);
 
-// Limiti bağla (varsa)
     if ($limit) {
         $stmt->bindParam(1, $limit, PDO::PARAM_INT);
     }
@@ -144,4 +167,23 @@ function getDataRowByColumn($id, $table, $db, $columnName = 'id')
     $stmt->execute([$id]);
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function updateMd5($lastId, $table, $db) {
+    $tempData['mId'] = md5($lastId);
+    $set = [];
+    foreach ($tempData as $key => $value) {
+        $set[] = "$key = ?";
+    }
+
+    try {
+        $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $data2 = array_values($tempData);
+        $data2[] = $lastId;
+
+        $stmt->execute($data2);
+    } catch (Exception $e) {
+        echo "Hata: " . $e->getMessage();
+    }
 }

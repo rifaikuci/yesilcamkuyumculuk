@@ -34,7 +34,7 @@ function getSelect($options = [])
 
     // Generate options
     foreach ($config['data'] as $key => $value) {
-        $selectedAttr = ($key == $config['value']) ? ' selected' : '';
+        $selectedAttr = (isset($config['value']) && $key == $config['value']) ? ' selected' : '';
         $html .= '<option value="' . htmlspecialchars($key) . '"' . $selectedAttr . '>' . htmlspecialchars($value) . '</option>';
     }
 

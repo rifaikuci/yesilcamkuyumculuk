@@ -39,6 +39,7 @@ $modules = [
     "currency/index.php",
     "personel/index.php",
     "customer/index.php",
+    "services/index.php",
 ];
 
 // Include all module files
