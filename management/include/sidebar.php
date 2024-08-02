@@ -36,6 +36,16 @@
                     "src/services",
                     "", "");
 
+                menuTreeSubTitle("S. Medya Hesapları",
+                    "far fas fa-share nav-icon",
+                    "src/smedia",
+                    "", "");
+
+                menuTreeSubTitle("Referanslar",
+                    "far fas fa-copy nav-icon",
+                    "src/reference",
+                    "", "");
+
 
                 menuLabel("Site Bilgileri", "green");
 

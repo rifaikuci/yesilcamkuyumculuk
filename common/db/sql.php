@@ -21,23 +21,27 @@ function update($data, $table, $id, $db)
         foreach ($data as $key => $value) {
             $set[] = "$key = ?";
         }
+        $data[] = $id;
+
 
         try {
             $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE mId = ?";
+
             $stmt = $db->prepare($sql);
-            $data[] = $id;
             $stmt->execute(array_values($data));
 
         } catch (Exception $e) {
             $sql = "UPDATE $table SET " . implode(", ", $set) . " WHERE id = ?";
             $stmt = $db->prepare($sql);
-            $data[] = $id;
             $stmt->execute(array_values($data));
         }
 
-
         return $stmt->rowCount();
     } catch (PDOException $e) {
+        print_r(array_values($data));
+
+        echo $e->getMessage();
+        exit();
         return false;
     }
 }
@@ -59,10 +63,8 @@ function delete($id, $table, $db)
         $stmt->execute([$id]);
     }
 
-    if(isset($row['image']) && $row['image']) {
-        if (file_exists("../" . $row['image'])) {
+    if(isset($row['image']) && $row['image'] && file_exists("../" . $row['image'])) {
             unlink("../" . $row['image']);
-        }
     }
 
     return $stmt->rowCount();
@@ -127,10 +129,12 @@ function getAllData($table, $limit, $db)
 
 function getAllDataWithSort($table, $limit, $db, $sort)
 {
+
     $columns = getTableColumns($table, $db);
     $sort = $sort ? $sort : "ASC";
 
     $sql = "SELECT * FROM $table ORDER BY id $sort";
+
 
     if ($limit) {
         $sql .= " LIMIT ?";

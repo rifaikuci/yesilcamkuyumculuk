@@ -1,5 +1,4 @@
 <?php
-
 if (file_exists("utils/index.php")) {
     require_once "utils/index.php";
 } elseif (file_exists("../utils/index.php")) {
@@ -9,9 +8,7 @@ if (file_exists("utils/index.php")) {
 } elseif (file_exists("../../../utils/index.php")) {
     require_once "../../../utils/index.php";
 }
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -23,7 +20,7 @@ if (file_exists("utils/index.php")) {
     <meta name="description" content="">
     <link rel="shortcut icon" type="image/png" href="<?php echo baseUrlBack() . "style/dist/img/favIcon/icon.png"; ?>">
 
-    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Anasayfa</title>
+    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Referans Ekle</title>
     <?php
     if (file_exists("include/style.php")) {
         require_once "include/style.php";
@@ -34,8 +31,8 @@ if (file_exists("utils/index.php")) {
     } elseif (file_exists("../../../include/style.php")) {
         require_once "../../../include/style.php";
     }
-
     ?>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -56,6 +53,7 @@ if (file_exists("utils/index.php")) {
             require_once "../../../include/sidebar-menu-icon.php";
             require_once "../../../include/top-bar-notification.php";
         } ?>
+
     </nav>
 
     <?php
@@ -70,10 +68,11 @@ if (file_exists("utils/index.php")) {
     }
     ?>
 
-    <div class="content-wrapper">
-        <?php require_once "main.php"; ?>
-    </div>
 
+    <div class="content-wrapper">
+        <?php getBreadcrumb("Referans Listesi", 'Ekle '); ?>
+        <?php require_once "main.php" ?>
+    </div>
     <?php
     if (file_exists("include/footer.php")) {
         require_once "include/footer.php";
@@ -84,9 +83,9 @@ if (file_exists("utils/index.php")) {
     } elseif (file_exists("../../../include/footer.php")) {
         require_once "../../../include/footer.php";
     }
-
-
     ?>
+
+
 </div>
 
 <?php
@@ -99,43 +98,7 @@ if (file_exists("include/script.php")) {
 } elseif (file_exists("../../../include/script.php")) {
     require_once "../../../include/script.php";
 }
-
 ?>
-
-<script>
-    $(function () {
-        var date = new Date();
-        var d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear();
-
-        var Calendar = FullCalendar.Calendar;
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new Calendar(calendarEl, {
-            headerToolbar: {
-                center: 'title',
-            },
-            themeSystem: 'bootstrap',
-            events: function (fetchInfo, successCallback, failureCallback) {
-                // Axios ile tatil verilerini getirme
-                axios.get('<?php echo baseUrlBack() . "kusva/index.php/?getHolidays=true"?>')
-                    .then(function (response) {
-                        var holidays = response.data;// Gelen JSON verisi
-                        successCallback(holidays);// FullCalendar'a etkinlikleri ekle
-                        console.log(holidays)
-                    })
-                    .catch(function (error) {
-                        console.error('Hata:', error);
-                        failureCallback(error);
-                    });
-            },
-            initialEvents: []
-        });
-
-        calendar.render();
-    });
-</script>
 
 </body>
 </html>

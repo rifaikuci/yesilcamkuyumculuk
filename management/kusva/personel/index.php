@@ -7,7 +7,7 @@ $fileName = basename(__FILE__, ".php");
 
 if (isset($_POST['personelInsert'])) {
 
-    $data = getDataForm(["shortName", "username", "password"]);
+    $data = getDataForm(["shortName", "username", "password", "phoneNumber", "mail"]);
     $lastId = insert($data, $personelTable, $db);
     $path = getPath($dirName, $fileName);
     redirectToPath($path, 'insert=' . ($lastId ? "ok" : "no"));
@@ -15,7 +15,8 @@ if (isset($_POST['personelInsert'])) {
 
 if (isset($_POST['personelUpdate'])) {
     $id = $_POST['personelUpdate'];
-    $data = getDataForm(["shortName", "username", "password"]);
+    $data = getDataForm(["shortName", "username", "password", "phoneNumber", "mail"]);
+
 
     $isUpdate = update($data, $personelTable, $id, $db);
     $path = getPath($dirName, $fileName);

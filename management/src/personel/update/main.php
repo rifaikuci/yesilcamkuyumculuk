@@ -26,6 +26,8 @@ if (isset($_GET['id'])) {
                 <div class="row">
                         <?php
                         getTextInput(['size'=>12, 'label' => 'Ad Soyad', 'placeholder' => 'Ad Soyad giriniz', 'name' => 'shortName', 'required' => true, 'value'=> $row['shortName']]);
+                        getTextInput([ 'label' => 'Telefon No', 'placeholder' => 'Telefon No Giriniz', 'name' => 'phoneNumber', 'value'=> $row['phoneNumber']]);
+                        getTextInput([ 'label' => 'Mail', 'placeholder' => 'Mail Giriniz', 'name' => 'mail', 'value'=> $row['mail']]);
                         getTextInput([ 'label' => 'Kullanıcı Adı (Girilen Kullanıcı Adı ile giriş yapılacak)', 'placeholder' => 'Kullanıcı Adı giriniz', 'name' => 'username', 'required' => true, 'value'=>$row['username']]);
                         getTextInput([ 'label' => 'Şifre', 'placeholder' => 'Şifre Giriniz', 'name' => 'password', 'required' => true, 'value'=>$row['password']]);
                         ?>

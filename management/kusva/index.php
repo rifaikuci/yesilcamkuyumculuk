@@ -40,6 +40,8 @@ $modules = [
     "personel/index.php",
     "customer/index.php",
     "services/index.php",
+    "smedia/index.php",
+    "reference/index.php",
 ];
 
 // Include all module files

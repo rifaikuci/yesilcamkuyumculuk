@@ -19,6 +19,8 @@
                 <div class="row">
                     <?php
                     getTextInput(['size'=>12, 'label' => 'Ad Soyad', 'placeholder' => 'Ad Soyad giriniz', 'name' => 'shortName', 'required' => true]);
+                    getTextInput([ 'label' => 'Telefon No', 'placeholder' => 'Telefon No Giriniz', 'name' => 'phoneNumber']);
+                    getTextInput([ 'label' => 'Mail', 'placeholder' => 'Mail Giriniz', 'name' => 'mail']);
                     getTextInput([ 'label' => 'Kullanıcı Adı (Girilen Kullanıcı Adı ile giriş yapılacak)', 'placeholder' => 'Kullanıcı Adı giriniz', 'name' => 'username', 'required' => true]);
                     getTextInput([ 'label' => 'Şifre', 'placeholder' => 'Şifre Giriniz', 'name' => 'password', 'required' => true]);
                     ?>
